@@ -50,7 +50,8 @@ if(UNIX)
   add_definitions(-D_FILE_OFFSET_BIT=64)
 endif()
 
-if(CMAKE_C_COMPILER MATCHES ".*clang")
+# The AES instructions of x86 only: not on arm64 (Apple Silicon, Linux).
+if(CMAKE_C_COMPILER_ID MATCHES "Clang" AND CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i.86")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse3 -msse4.1 -maes")
 endif()
 
